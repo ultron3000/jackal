@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The Day of the Jackal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      background: black;
+      color: #ffcc00;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 2em;
+    }
+
+    .content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .card {
+      background: #222;
+      border: 2px solid #ffcc00;
+      border-radius: 12px;
+      width: 220px;
+      padding: 10px;
+      cursor: pointer;
+      transition: transform 0.3s;
+      position: relative;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      background: #333;
+    }
+
+    .card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .card-title {
+      margin-top: 10px;
+      font-size: 1em;
+      font-weight: bold;
+    }
+
+    .episodes {
+      display: none;
+      margin-top: 10px;
+      text-align: left;
+    }
+
+    .episode-link {
+      display: block;
+      padding: 5px 10px;
+      color: #ffcc00;
+      text-decoration: underline;
+      cursor: pointer;
+      font-size: 0.95em;
+    }
+
+    .episode-link:hover {
+      color: #ffffff;
+    }
+
+    @media (max-width: 600px) {
+      .content {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 15px;
+      }
+      .card {
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .card img {
+        height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<h1>🎯 The Day of the Jackal</h1>
+
+<div class="content">
+
+  <!-- Movie Card -->
+  <div class="card" onclick="playVideo('The Day of the Jackal (1973)', 'https://cdn-1.celestialodyssey.site/video-stream/90b1c6e8/playlist.m3u8')">
+    <img src="https://media.themoviedb.org/t/p/w500/vThgcb3JOj99yETg8WChuci4LV2.jpg" alt="The Day of the Jackal Movie">
+    <div class="card-title">🎬 Movie: The Day of the Jackal (1973)</div>
+  </div>
+
+  <!-- Series Card -->
+  <div class="card" onclick="toggleEpisodes()">
+    <img src="https://lh4.googleusercontent.com/proxy/QLEo36gKmRBqgvFaHWC3s2NPou70gAj7AJw1obQvL7uCRqSHpIB4zKog6SRHoGBV40CFNZBxwe2Kx6hkBzhD5xpKtaor-em_tPJkNVcBDIMZgIR6" alt="The Day of the Jackal Series">
+    <div class="card-title">📺 Series: The Day of the Jackal - Season 1</div>
+    <div class="episodes" id="episodeList"></div>
+  </div>
+
+</div>
+
+<script>
+const seriesEpisodes = [
+  "https://cdn-2.celestialodyssey.site/video-stream/c4b4c70f/playlist.m3u8",
+  "https://sxic.cortinala.sbs/v4/sc/6d3sg/index-f1-v1-a1.txt",
+  "https://sojg.feistjmyrodne.sbs/v4/db/hjvkl/index-f1-v1-a1.txt",
+  "https://sdqm.sralphqesrob.sbs:443/v4/db/p8wod/index-f2-v1-a1.txt",
+  "https://xy0rg432t6i3.cdn-centaurus.com/hls2/01/05485/xpi1gf4j9obi_,l,n,h,.urlset/master.m3u8?t=iLn-K-yjI7njvAu3EBkWA5XRAIeXtnwcWbAi8LiLj2s&s=1747116780&e=129600&f=27429238&srv=z13jtbat10fahdh456&i=0.4&sp=500&p1=z13jtbat10fahdh456&p2=z13jtbat10fahdh456&asn=24554",
+  "https://spuc.angelobo.sbs/v4/sc/931r3/index-f1-v1-a1.txt",
+  "https://spuc.gatesnationjyd.sbs/v4/ck/8bnbk/index-f1-v1.txt",
+  "https://scvo.desrocherswick.sbs/v4/61/xoo3j/index-f1-v1-a1.txt",
+  "https://u22n5v7bp0qa.cdn-centaurus.com:443/hls2/01/06989/3iblersorv5c_n/index-v1-a1.m3u8?t=pptfUrFr6MdKLgVQ3_UPWn8mctT06gxqAM7eRMbmZSc&s=1747117140&e=129600&f=34950830&srv=fbIjIZy3pIBwE0S&i=0.4&sp=500&p1=fbIjIZy3pIBwE0S&p2=fbIjIZy3pIBwE0S&asn=24554",
+  "https://sr81.garnicaniibreslin.sbs/v4/hz/ecj16/index-f1-v1-a1.txt"
+];
+
+function playVideo(title, video) {
+  const url = `player.html?title=${encodeURIComponent(title)}&video=${encodeURIComponent(video)}`;
+  window.location.href = url;
+}
+
+function toggleEpisodes() {
+  const list = document.getElementById('episodeList');
+  if (list.style.display === 'block') {
+    list.style.display = 'none';
+    return;
+  }
+  if (list.innerHTML === '') {
+    seriesEpisodes.forEach((link, i) => {
+      const ep = document.createElement('div');
+      ep.className = 'episode-link';
+      ep.innerText = `Episode ${i + 1}`;
+      ep.onclick = (e) => {
+        e.stopPropagation(); // prevent collapsing
+        playVideo(`The Day of the Jackal - S01E${String(i + 1).padStart(2, '0')}`, link);
+      };
+      list.appendChild(ep);
+    });
+  }
+  list.style.display = 'block';
+}
+</script>
+
+</body>
+</html>
