@@ -7,1000 +7,487 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    :root {
-      --gold: #ffcc00;
-      --dark: #111111;
-      --darker: #0a0a0a;
-      --card-bg: #1c1c1c;
-      --hover-bg: #2a2a2a;
-      --text-light: #f5f5f5;
-      --accent: #e63946;
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
     }
-
-    @font-face {
-      font-family: 'Cinzel';
-      src: url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+    ::-webkit-scrollbar-track {
+      background: #111;
     }
-
-    body {
-      background-color: var(--dark);
-      color: var(--text-light);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
-      overflow-x: hidden;
-      background-image: radial-gradient(circle at 50% 50%, rgba(255, 204, 0, 0.03) 0%, transparent 50%);
+    ::-webkit-scrollbar-thumb {
+      background: #ffcc00;
+      border-radius: 4px;
     }
-
-    .header {
-      background: linear-gradient(135deg, var(--dark) 0%, var(--darker) 100%);
-      padding: 2rem 1rem;
-      border-bottom: 2px solid var(--gold);
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-      position: relative;
-      z-index: 10;
+    ::-webkit-scrollbar-thumb:hover {
+      background: #ffdd33;
     }
-
-    h1 {
-      font-family: 'Cinzel', serif;
-      font-size: 2.8rem;
-      letter-spacing: 2px;
-      margin: 0;
-      color: var(--gold);
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
+    
+    /* Custom animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+    
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+    .delay-5 { animation-delay: 0.5s; }
+    
+    /* Glow effect */
+    .glow-effect {
       position: relative;
     }
-
-    h1::before, h1::after {
-      content: "✧";
-      color: var(--gold);
-      font-size: 1.5rem;
-      opacity: 0.7;
-    }
-
-    .nav-tabs {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      margin-top: 1.5rem;
-    }
-
-    .nav-tab {
-      color: rgba(255, 255, 255, 0.7);
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-weight: 500;
-      position: relative;
-    }
-
-    .nav-tab.active, .nav-tab:hover {
-      color: var(--gold);
-      background: rgba(255, 204, 0, 0.1);
-    }
-
-    .nav-tab.active::after {
+    
+    .glow-effect::after {
       content: '';
       position: absolute;
-      bottom: -8px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60%;
-      height: 2px;
-      background: var(--gold);
-    }
-
-    .content {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 2rem;
-      padding: 2rem;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-
-    .card {
-      background: var(--card-bg);
-      border-radius: 14px;
-      width: 300px;
-      cursor: pointer;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-      transition: all 0.3s ease;
-      overflow: hidden;
-      border: 1px solid rgba(255, 204, 0, 0.3);
-      position: relative;
-    }
-
-    .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.6);
-      background: var(--hover-bg);
-      border-color: var(--gold);
-    }
-
-    .card-img-container {
-      position: relative;
-      width: 100%;
-      height: 400px;
-      overflow: hidden;
-    }
-
-    .card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.5s ease;
-    }
-
-    .card:hover img {
-      transform: scale(1.05);
-    }
-
-    .card-badge {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background-color: rgba(0, 0, 0, 0.7);
-      color: var(--gold);
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: bold;
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .card-badge.new {
-      background-color: var(--accent);
-      color: white;
-    }
-
-    .card-info {
-      padding: 1rem;
-      background: rgba(0, 0, 0, 0.5);
-      border-top: 1px solid rgba(255, 204, 0, 0.2);
-    }
-
-    .card-title {
-      font-weight: 600;
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .card-meta {
-      display: flex;
-      justify-content: space-between;
-      color: rgba(255, 255, 255, 0.7);
-      font-size: 0.85rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .card-rating {
-      color: var(--gold);
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .card-description {
-      font-size: 0.9rem;
-      color: rgba(255, 255, 255, 0.7);
-      margin-top: 0.5rem;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .card-actions {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 1rem;
-    }
-
-    .card-btn {
-      background: rgba(255, 204, 0, 0.1);
-      color: var(--gold);
-      border: 1px solid rgba(255, 204, 0, 0.3);
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
-      font-size: 0.8rem;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .card-btn:hover {
-      background: var(--gold);
-      color: #000;
-      border-color: var(--gold);
-    }
-
-    .card-btn.secondary {
-      background: rgba(255, 255, 255, 0.05);
-      color: rgba(255, 255, 255, 0.8);
-      border-color: rgba(255, 255, 255, 0.1);
-    }
-
-    .card-btn.secondary:hover {
-      background: rgba(255, 255, 255, 0.2);
-      color: white;
-    }
-
-    .episodes {
-      display: none;
-      background-color: rgba(0, 0, 0, 0.7);
-      max-height: 300px;
-      overflow-y: auto;
-      scrollbar-width: thin;
-      scrollbar-color: var(--gold) rgba(0, 0, 0, 0.3);
-      animation: dropdown 0.4s ease;
-      text-align: left;
-    }
-
-    .episodes::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    .episodes::-webkit-scrollbar-track {
-      background: rgba(0, 0, 0, 0.3);
-    }
-
-    .episodes::-webkit-scrollbar-thumb {
-      background-color: var(--gold);
-      border-radius: 3px;
-    }
-
-    .episode-link {
-      color: var(--text-light);
-      padding: 0.75rem 1rem;
-      margin: 0;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      transition: all 0.2s;
-      border-bottom: 1px solid rgba(255, 204, 0, 0.1);
-    }
-
-    .episode-link:hover {
-      background: var(--gold);
-      color: #000;
-    }
-
-    .episode-link i {
-      opacity: 0;
-      transition: opacity 0.2s ease;
-    }
-
-    .episode-link:hover i {
-      opacity: 1;
-    }
-
-    .footer {
-      background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
-      padding: 2rem;
-      text-align: center;
-      color: rgba(255, 255, 255, 0.7);
-      font-size: 0.9rem;
-      border-top: 1px solid rgba(255, 204, 0, 0.2);
-      margin-top: 2rem;
-    }
-
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .footer-link {
-      color: rgba(255, 255, 255, 0.7);
-      transition: color 0.2s;
-    }
-
-    .footer-link:hover {
-      color: var(--gold);
-    }
-
-    .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      margin-top: 1rem;
-    }
-
-    .social-link {
-      color: rgba(255, 255, 255, 0.7);
-      font-size: 1.2rem;
-      transition: all 0.2s;
-    }
-
-    .social-link:hover {
-      color: var(--gold);
-      transform: translateY(-2px);
-    }
-
-    @keyframes dropdown {
-      from { opacity: 0; max-height: 0; }
-      to { opacity: 1; max-height: 300px; }
-    }
-
-    /* Loading animation */
-    .loading {
-      display: none;
-      position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.9);
-      z-index: 1000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
+      right: 0;
+      bottom: 0;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(255, 204, 0, 0);
+      transition: box-shadow 0.3s ease;
+      pointer-events: none;
     }
-
-    .spinner {
-      width: 60px;
-      height: 60px;
-      border: 5px solid rgba(255, 204, 0, 0.3);
-      border-radius: 50%;
-      border-top-color: var(--gold);
-      animation: spin 1s ease-in-out infinite;
+    
+    .glow-effect:hover::after {
+      box-shadow: 0 0 15px rgba(255, 204, 0, 0.7);
     }
-
-    .loading-text {
-      color: var(--gold);
-      margin-top: 1.5rem;
-      font-size: 1.1rem;
-      letter-spacing: 1px;
-      text-align: center;
-      max-width: 300px;
+    
+    /* Gradient text */
+    .gradient-text {
+      background: linear-gradient(90deg, #ffcc00, #ff9900);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
-
-    .loading-dots {
-      display: inline-block;
-      width: 20px;
-      text-align: left;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    @keyframes dots {
-      0%, 20% { content: '.'; }
-      40% { content: '..'; }
-      60% { content: '...'; }
-      80%, 100% { content: ''; }
-    }
-
-    /* Search bar */
-    .search-container {
-      max-width: 600px;
-      margin: 1.5rem auto 0;
-      position: relative;
-    }
-
-    .search-input {
-      width: 100%;
-      padding: 0.8rem 1.5rem;
-      border-radius: 30px;
-      border: none;
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      font-size: 1rem;
-      padding-left: 3rem;
-      transition: all 0.3s;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .search-input:focus {
-      outline: none;
-      background: rgba(255, 255, 255, 0.15);
-      border-color: rgba(255, 204, 0, 0.5);
-      box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.2);
-    }
-
-    .search-icon {
-      position: absolute;
-      left: 1rem;
-      top: 50%;
-      transform: translateY(-50%);
-      color: rgba(255, 255, 255, 0.7);
-    }
-
-    /* Responsive styles */
-    @media (max-width: 1024px) {
-      .card {
-        width: 280px;
-      }
-      
-      .card-img-container {
-        height: 380px;
+    
+    /* Responsive adjustments */
+    @media (max-width: 640px) {
+      .movie-card {
+        width: calc(50% - 1rem);
       }
     }
-
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2rem;
-      }
-      
-      .content {
-        flex-direction: column;
-        align-items: center;
-        padding: 1rem;
-      }
-
-      .card {
+    
+    @media (max-width: 400px) {
+      .movie-card {
         width: 100%;
-        max-width: 400px;
       }
-
-      .card-img-container {
-        height: 350px;
-      }
-      
-      .nav-tabs {
-        gap: 1rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 1.6rem;
-      }
-      
-      .card-title {
-        font-size: 1rem;
-      }
-      
-      .episode-link {
-        padding: 0.6rem 0.75rem;
-        font-size: 0.9rem;
-      }
-      
-      .nav-tabs {
-        flex-wrap: wrap;
-        gap: 0.5rem;
-      }
-      
-      .nav-tab {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.85rem;
-      }
-      
-      .footer-links {
-        flex-wrap: wrap;
-        gap: 1rem;
-      }
-    }
-
-    /* Floating action button */
-    .fab {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: var(--gold);
-      color: #000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      cursor: pointer;
-      z-index: 100;
-      transition: all 0.3s;
-    }
-
-    .fab:hover {
-      transform: translateY(-3px) scale(1.05);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-    }
-
-    /* Toast notification */
-    .toast {
-      position: fixed;
-      bottom: -100px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--gold);
-      color: #000;
-      padding: 0.8rem 1.5rem;
-      border-radius: 4px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      transition: bottom 0.4s ease;
-    }
-
-    .toast.show {
-      bottom: 2rem;
-    }
-
-    .toast i {
-      font-size: 1.2rem;
     }
   </style>
 </head>
-<body>
-
-<div class="header">
-  <h1>The Day of the Jackal</h1>
-  
-  <div class="nav-tabs">
-    <div class="nav-tab active" onclick="filterContent('all')">
-      <i class="fas fa-th-large"></i> All
-    </div>
-    <div class="nav-tab" onclick="filterContent('movies')">
-      <i class="fas fa-film"></i> Movies
-    </div>
-    <div class="nav-tab" onclick="filterContent('series')">
-      <i class="fas fa-tv"></i> Series
-    </div>
-    <div class="nav-tab" onclick="filterContent('favorites')">
-      <i class="fas fa-heart"></i> Favorites
-    </div>
-  </div>
-  
-  <div class="search-container">
-    <i class="fas fa-search search-icon"></i>
-    <input type="text" class="search-input" placeholder="Search titles..." id="searchInput" oninput="searchTitles()">
-  </div>
-</div>
-
-<div class="content" id="contentContainer">
-
-  <!-- Movie Card -->
-  <div class="card" data-type="movie" onclick="playVideo('The Day of the Jackal (1973)', 'https://macdn.hakunaymatata.com/resource/0f6b2960a01ecb6c5d520d8cf2557403.mp4?Expires=1749420958&Signature=DSkebjApY4LWVSPMXfhJSXHCLBaNKtbuKM8JZOEetEOgoTf~RmkATSB2AAs2dV6J01ojN656bjdEIYrZ0G0eccIsloZvrs-GDWvc0TdVmhVuyuKIHY0M~mQm1M2xpNhE2nC20Ziqf0b-PVOWFUDaT9um5QcErxXJSGyPDAIzvG7ffZSIYe5Y8Q187leYGFONWipZ7iwHguNNAHLm7~oLoG0Gb~yWTBoU6pfzR8yDf2v-u676EMG0JG-D3OL9ywVj6Kz4oSopJLcmrC1MiUMrx19XtP0OOghxzYvExKFmU0KEwPh52Y9PWJgjcCy5U4o9u0fhQBoEe0wFI6RvNs~E5g__&Key-Pair-Id=KMHN1LQ1HEUPL')">
-    <div class="card-img-container">
-      <img src="https://i.etsystatic.com/17287922/r/il/bc7268/3613159287/il_1080xN.3613159287_qqvy.jpg" alt="The Day of the Jackal Movie">
-      <div class="card-badge">
-        <i class="fas fa-star"></i> HD
+<body class="bg-black text-gray-100 min-h-screen">
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-black bg-opacity-90 backdrop-blur-sm border-b border-yellow-600/20">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="flex items-center space-x-2">
+        <div class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center">
+          <i class="fas fa-shield-alt text-black text-xl"></i>
+        </div>
+        <h1 class="text-2xl font-bold gradient-text">THE DAY OF THE JACKAL</h1>
+      </div>
+      
+      <div class="flex items-center space-x-4">
+        <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-800 transition">
+          <i class="fas fa-moon text-yellow-500"></i>
+        </button>
+        <button id="search-btn" class="p-2 rounded-full hover:bg-gray-800 transition">
+          <i class="fas fa-search text-yellow-500"></i>
+        </button>
       </div>
     </div>
-    <div class="card-info">
-      <div class="card-title">
-        <span>The Day of the Jackal</span>
-        <div class="card-rating">
-          <i class="fas fa-star"></i> 8.0
+    
+    <!-- Search Bar (hidden by default) -->
+    <div id="search-bar" class="hidden px-4 pb-4">
+      <div class="relative">
+        <input type="text" placeholder="Search episodes..." 
+               class="w-full bg-gray-900 border border-yellow-600/30 rounded-full py-2 px-4 pl-10 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+        <i class="fas fa-search absolute left-3 top-3 text-yellow-500"></i>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 py-8">
+    <!-- Hero Section -->
+    <section class="mb-12 relative overflow-hidden rounded-xl">
+      <div class="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent z-10"></div>
+      <img src="https://static1.cbrimages.com/wordpress/wp-content/uploads/2024/10/the-day-of-the-jackal-eddie-redmayne.jpg" 
+           alt="The Day of the Jackal Banner" class="w-full h-64 md:h-96 object-cover">
+      <div class="absolute bottom-0 left-0 z-20 p-6 md:p-8">
+        <h2 class="text-3xl md:text-5xl font-bold mb-2 gradient-text">Movie & TV Series</h2>
+        <p class="text-gray-300 mb-4 max-w-lg">A gripping political thriller across two eras — the iconic 1973 film and the modern 2024 TV series — both follow a deadly assassin known as "The Jackal" and the global manhunt to stop him. </p>
+        <div class="flex space-x-3">
+          <button class="bg-yellow-600 hover:bg-yellow-700 text-black font-semibold py-2 px-6 rounded-full transition flex items-center">
+            <i class="fas fa-play mr-2"></i> Play All
+          </button>
+          <button class="bg-gray-800 hover:bg-gray-700 text-white font-semibold py-2 px-6 rounded-full transition flex items-center">
+            <i class="fas fa-info-circle mr-2"></i> Details
+          </button>
         </div>
       </div>
-      <div class="card-meta">
-        <span>1973</span>
-        <span>143 min</span>
-      </div>
-      <div class="card-description">
-        A professional assassin known only as "The Jackal" is hired to kill French president Charles de Gaulle. As the authorities close in, the Jackal employs ever more elaborate methods to outwit his pursuers.
-      </div>
-      <div class="card-actions">
-        <button class="card-btn" onclick="event.stopPropagation(); addToFavorites('The Day of the Jackal (1973)')">
-          <i class="fas fa-heart"></i> Favorite
-        </button>
-        <button class="card-btn secondary" onclick="event.stopPropagation(); showDetails('The Day of the Jackal (1973)')">
-          <i class="fas fa-info-circle"></i> Details
-        </button>
-      </div>
-    </div>
-  </div>
+    </section>
 
-  <!-- Series Card -->
-  <div class="card" id="seriesCard" data-type="series">
-    <div class="card-img-container">
-      <img src="https://image.tmdb.org/t/p/original/4kk77Ygb9soy5HQ4KBPQ9c1jXNN.jpg" alt="The Day of the Jackal Series">
-      <div class="card-badge new">
-        <i class="fas fa-bolt"></i> NEW
+    <!-- Filters -->
+    <div class="flex flex-wrap items-center justify-between mb-8 gap-4">
+      <div class="flex space-x-2 overflow-x-auto pb-2 scrollbar-hide">
+        <button class="filter-btn active bg-yellow-600 text-black px-4 py-1 rounded-full text-sm font-medium">All</button>
+        <button class="filter-btn bg-gray-800 hover:bg-gray-700 px-4 py-1 rounded-full text-sm font-medium">Thriller</button>
+        <button class="filter-btn bg-gray-800 hover:bg-gray-700 px-4 py-1 rounded-full text-sm font-medium">Drama</button>
+        <button class="filter-btn bg-gray-800 hover:bg-gray-700 px-4 py-1 rounded-full text-sm font-medium">Political</button>
+        <button class="filter-btn bg-gray-800 hover:bg-gray-700 px-4 py-1 rounded-full text-sm font-medium">Crime</button>
+      </div>
+      
+      <div class="flex items-center space-x-2">
+        <span class="text-gray-400 text-sm">Sort by:</span>
+        <select class="bg-gray-900 border border-gray-700 text-white text-sm rounded-full px-3 py-1 focus:outline-none focus:ring-1 focus:ring-yellow-500">
+          <option>Release Date</option>
+          <option>Episode Order</option>
+          <option>Popularity</option>
+        </select>
       </div>
     </div>
-    <div class="card-info">
-      <div class="card-title" onclick="toggleEpisodes(event)">
-        <span>The Day of the Jackal - Season 1</span>
-        <div class="card-rating">
-          <i class="fas fa-star"></i> 7.5
+
+    <!-- Episodes Grid -->
+    <section>
+      <h3 class="text-xl font-semibold mb-6 flex items-center">
+        <i class="fas fa-list-ul text-yellow-500 mr-2"></i>
+        Episodes
+      </h3>
+      
+      <div id="episodes" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+        <!-- Episode cards will be inserted here by JavaScript -->
+      </div>
+    </section>
+
+    <!-- Original Movie Section -->
+    <section class="mt-12">
+      <h3 class="text-xl font-semibold mb-6 flex items-center">
+        <i class="fas fa-film text-yellow-500 mr-2"></i>
+        Original Movie (1973)
+      </h3>
+      
+      <div id="original-movie" class="grid grid-cols-1 gap-6">
+        <!-- Original movie card will be inserted here by JavaScript -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 border-t border-gray-800 mt-12 py-8">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="mb-4 md:mb-0">
+          <div class="flex items-center space-x-2">
+            <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center">
+              <i class="fas fa-shield-alt text-black text-sm"></i>
+            </div>
+            <span class="text-xl font-bold gradient-text">THE DAY OF THE JACKAL</span>
+          </div>
+          <p class="text-gray-400 text-sm mt-2">© 2023 The Day of the Jackal Productions. All rights reserved.</p>
+        </div>
+        
+        <div class="flex space-x-6">
+          <a href="#" class="text-gray-400 hover:text-yellow-500 transition"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="text-gray-400 hover:text-yellow-500 transition"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="text-gray-400 hover:text-yellow-500 transition"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="text-gray-400 hover:text-yellow-500 transition"><i class="fab fa-youtube"></i></a>
         </div>
       </div>
-      <div class="card-meta">
-        <span>2023</span>
-        <span>10 Episodes</span>
-      </div>
-      <div class="card-description">
-        A modern adaptation of the classic thriller, following an assassin hired to kill a high-profile political figure. This series expands on the original story with new twists and deeper character development.
-      </div>
-      <div class="card-actions">
-        <button class="card-btn" onclick="event.stopPropagation(); addToFavorites('The Day of the Jackal - Season 1')">
-          <i class="fas fa-heart"></i> Favorite
-        </button>
-        <button class="card-btn secondary" onclick="event.stopPropagation(); showDetails('The Day of the Jackal - Season 1')">
-          <i class="fas fa-info-circle"></i> Details
-        </button>
-      </div>
     </div>
-    <div class="episodes" id="episodeList"></div>
-  </div>
+  </footer>
 
-  <!-- Additional Movie Card -->
-  <div class="card" data-type="movie" onclick="playVideo('The Jackal (1997)', 'https://example.com/videos/jackal1997.mp4')">
-    <div class="card-img-container">
-      <img src="https://m.media-amazon.com/images/M/MV5BNDk0OGI5M2MtYTQ4YS00YzNkLWE0ZTktYTJiOTAyY2QyYWNkXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_.jpg" alt="The Jackal Movie">
-      <div class="card-badge">
-        <i class="fas fa-star"></i> HD
+  <!-- Playback Modal (hidden by default) -->
+  <div id="playback-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black bg-opacity-90">
+    <div class="relative w-full max-w-4xl bg-gray-900 rounded-xl overflow-hidden">
+      <button id="close-modal" class="absolute top-4 right-4 z-50 text-white hover:text-yellow-500 text-2xl">
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="aspect-w-16 aspect-h-9">
+        <video id="modal-video" class="w-full" controls>
+          Your browser does not support the video tag.
+        </video>
       </div>
-    </div>
-    <div class="card-info">
-      <div class="card-title">
-        <span>The Jackal</span>
-        <div class="card-rating">
-          <i class="fas fa-star"></i> 6.4
+      <div class="p-6">
+        <h3 id="modal-title" class="text-2xl font-bold mb-2"></h3>
+        <div class="flex items-center text-gray-400 text-sm mb-4">
+          <span id="episode-info" class="mr-4"></span>
+          <span id="runtime-info"></span>
+        </div>
+        <p id="modal-description" class="text-gray-300 mb-6">
+          Loading description...
+        </p>
+        <div class="flex space-x-3">
+          <button class="bg-yellow-600 hover:bg-yellow-700 text-black font-semibold py-2 px-6 rounded-full transition flex items-center">
+            <i class="fas fa-play mr-2"></i> Play
+          </button>
+          <button class="bg-gray-800 hover:bg-gray-700 text-white font-semibold py-2 px-6 rounded-full transition flex items-center">
+            <i class="fas fa-plus mr-2"></i> Watchlist
+          </button>
         </div>
       </div>
-      <div class="card-meta">
-        <span>1997</span>
-        <span>124 min</span>
-      </div>
-      <div class="card-description">
-        A modern reimagining of the original story, featuring an international assassin pursued by the FBI and a former IRA operative who is released from prison to help track him down.
-      </div>
-      <div class="card-actions">
-        <button class="card-btn" onclick="event.stopPropagation(); addToFavorites('The Jackal (1997)')">
-          <i class="fas fa-heart"></i> Favorite
-        </button>
-        <button class="card-btn secondary" onclick="event.stopPropagation(); showDetails('The Jackal (1997)')">
-          <i class="fas fa-info-circle"></i> Details
-        </button>
-      </div>
     </div>
   </div>
 
-</div>
+  <script>
+    // Enhanced Episode data with descriptions
+    const episodes = [
+      { 
+        title: "Episode 1", 
+        year: 2024,
+        video: "https://macdn.hakunaymatata.com/resource/b1bf9f89d94f288d0269a16016b3dcb7.mp4?Expires=1749547834&Signature=IUIt9~LvXOp4IcRzKZWVtCegG2LLg9DovyEsdlkbidpNbaNKdcEJpS1CD6i56QTXtIoH7hWKjgpT0Hfkec6w96g4V5b5BSXpP39inyI~itWartLLMzqGpE5srnnBW7VEQBavwfsQluVAJ-4QuLMRj5x7nk6Vo6im0paQs4a7042VFW~DIE0tZk~Rw1Nvxmo9e-tnQqW4tmMHlBW2t-7Y0eAQRzxFqK6~vtIZVJ1bB2EwkGRnjOBzVWeTg0dg~FcGQcDTaqXXWI67VjORbcN5qETpA5Nz25bTvwwxH6ePk~mTmges~CpaqrmXuxX6c8fOiRFeKEjl7I4ZHX73hO1U~w__&Key-Pair-Id=KMHN1LQ1HEUPL", 
+        image: "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/4749/1738838544749-h",
+        runtime: "45 min",
+        rating: "7.8/10",
+        description: "When an elite assassin carries out his latest kill, it catches the attention of an intelligence officer, who starts to hunt him down.",
+      },
+      { 
+        title: "Episode 2", 
+        year: 2024,
+        video: "https://vgorigin.hakunaymatata.com/resource/867908de51c6b94235f73be02993d583.mp4?Expires=1749548326&KeyName=wefeed&Signature=51wV0dEmC95QtSQrpcm7fhrKYNuNkKSua-7V_NITwlN8bIte_TbltFm6DOggFcBAzfIdLs5yP4bkDvScK6yzCA", 
+        image: "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/4955/1738838544955-h",
+        runtime: "45 min",
+        rating: "8.1/10",
+        description: "With his previous client backing out of payment, the Jackal's reputation is on the line, and he starts to plot his revenge.",
+      },
+      { 
+        title: "Episode 3", 
+        year: 2024,
+        video: "https://macdn.hakunaymatata.com/resource/795074e28eca83f5543200e46f079b8c.mp4?Expires=1749548223&Signature=bP7Fl9LFfYZULGtLOOxj6MAoCNAW49Fji6pG7Zag7DcJ7ZnXXfjXedGkiJ~3LttDZnNPFzC8B-6qicwQIgmz1Vxl8WaXP1OaNvJwPNQZbTFpkAn-8O5FG8~sMgt7LHpFXJkDDP-5wO7NxNv8Kd~AE1dWjFkYuHl4EE6LYm~eWFTprEx9Av2KA~99rGorW2prYDUoOlsC~7lWww674AgEBfcQbsfhhbzJBCV6~2gvpJiE3kXj6Bx-kAlJrzliEy86UMuHU6WwbnrCVf0hc4epCsaUooyPWg4CZme3qyKO~LReMTywD-UxTcgSEvCD2VTUbSybEswU4thaYspl850xyQ__&Key-Pair-Id=KMHN1LQ1HEUPL", 
+        image: "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/5166/1738838545166-h",
+        runtime: "45 min",
+        rating: "8.3/10",
+        description: "Armed with the knowledge of his wayward client's identity, the Jackal tracks him down in Munich, determined to settle the score.",
+      },
+      { 
+        title: "Episode 4", 
+        year: 2024,
+        video: "https://macdn.hakunaymatata.com/resource/67fcefd1a45a593df0f0ceafd47fce05.mp4?Expires=1749549544&Signature=4mMYse8cmimMzGoETbJdPULRIG2gXFE0aO0CuqINlNAMBiej-r8didFCz1Iw-Yz6IDO6U56MXjXw3tAzybOEkGZzeiYxMQkKOKFE5u~5qxNTh9OMwiIsjzsHl0cJDEE-xwkJJWJunvzKFbub5fQKLVdadG8oRfqZRCIeBrhbZvNnjIXnKPDOoLvQxzZr14EYDAHBmuesLPBYgw3M6Ppl1PZR2N0rmvOZq5IeCysQex10K20VX7vnwZwBe54Xrf2WQmHZse8Bg4lwZ3JmqC7sd7KS1rMNmdWnFU78E-o8dlC1pA39IB-BkZGE-dYDeuetoFFfG83F8OiV6AUzDgK9pw__&Key-Pair-Id=KMHN1LQ1HEUPL", 
+        image: "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/7180/1738838547180-h",
+        runtime: "45 min",
+        rating: "8.4/10",
+        description: "His vengeance fulfilled, the Jackal flees Munich and tries to quell Nuria's suspicions. Bianca follows a new lead in her hunt.",
+      },
+      { 
+        title: "Episode 5", 
+        year: 2024,
+        video: "https://vgorigin.hakunaymatata.com/resource/e7532ac0ce1cd66a6facb56fa4e8ac62.mp4?Expires=1749547135&KeyName=wefeed&Signature=bXg9TvgkWij9KgNHV0l_sqtfXPtclK8bW1yn3IUZva5i0Zr7bgI6i61hyqHXexIhc4T4-FK0SOPVACdP3c3rBw", 
+        image: "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/6205/1738838546205-h",
+        runtime: "45 min",
+        rating: "8.7/10",
+        description: "The Jackal visits Norman with a special commission, but with Bianca also tracking Norman down, she is starting to close in on him.",
+      },
+      { 
+        title: "Episode 6", 
+        year: 2024,
+        video: "https://vgorigin.hakunaymatata.com/resource/062177943431e9712f2672671b9ad9a3.mp4?Expires=1749546535&KeyName=wefeed&Signature=E88ZxVZdtQgcHdZq5Xs21uVv6f4NT1I-nKPKYjww9A0ekK3dsH95Bf45BYt77pEgz0mYqih-3n70FXjvS5qiBQ", 
+        image: "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/3306/1738838543306-h",
+        runtime: "45 min",
+        rating: "9.0/10",
+        description: "Following his shoot-out with Bianca, the Jackal must escape his captors and regroup ahead of his hit on Ulle Dag Charles; Bianca tracks his trail of devastation through central Europe.",
+      },
+      { 
+        title: "Episode 7", 
+        year: 2024,
+        video: "https://vgorigin.hakunaymatata.com/resource/c53c998587b57c1b5a773d2cde4c6cac.mp4?Expires=1749547552&KeyName=wefeed&Signature=7utZ5sify1YShlDOF9v1douRRyNxrGk93Ni_kPjeCkS_ro__o7AhlY1dETHWH3kB2_-SeDSol61lAPsoUyDBCQ", 
+        image: "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/1604/1738838541604-h",
+        runtime: "45 min",
+        rating: "8.5/10",
+        description: "The Jackal and Bianca both descend on Tallinn in anticipation of UDC's announcement; with the venue in lockdown and Bianca closing in, the Jackal must use all his wiles as he prepares to take his shot.",
+      },
+      { 
+        title: "Episode 8", 
+        year: 2024,
+        video: "https://macdn.hakunaymatata.com/resource/0795ae4d0c85ce6015aa10d72de90f97.mp4?Expires=1749546565&Signature=izo9CmoflUfY4a9bJkls~l-poxlnT1XjTGO6FNaNIPxRKj1-83KPukclFg-dRcAqAd7bh5qwpLKnS~F4DRoeB3DnSXI-LNbL1ugCPmunB5cXUaJog99XAuU1V0gpk7GqnSENHRvug3pGq41sNPFlfBvEtvmybiFYtpEl5FqXZ21II9bIj7q5O1xxKLXbzk4oto5borP~y7qBZtjxZ0YxckGo-OWTCzsMQ1qaL6U~c9UHuePiSspVly-aW38QGgkUiTaOJ3fTcpvsdr--601TayKf7EEEuYahmhRbw3zh49hBtuM4Fm12FvpFV9mmzfBPI1~Go04A1qrx-Dtbx3QdVA__&Key-Pair-Id=KMHN1LQ1HEUPL", 
+        image: "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/8679/1738838538679-h",
+        runtime: "45 min",
+        rating: "8.2/10",
+        description: "Emerging from the turmoil in Tallinn, the Jackal retreats into the shadows. Meanwhile, Bianca meticulously delves into the mysterious history of 'Duggan,' analyzing his experiences in Afghanistan to uncover potential new leads.",
+      },
+      { 
+        title: "Episode 9", 
+        year: 2024,
+        video: "https://macdn.hakunaymatata.com/resource/01f1a1e5553b3ec3d155c49f030ac72a.mp4?Expires=1749550927&Signature=IUHINBRE0KVPqLWUueiqw01AxWrdXd5kI3dOgDmkxWW1TL6NlCMIEch15RhlQ68MYDEKpSGwEEpDSnXzK5vPYh2l7s62XtyEJmz9QW~SISHJbVYf3WTHImEHsjMK-bn6QeIOA-R9qqEEbR~WWDoDQ5QLvznIKL766s-7JTHWhBXwnyLlcRPpnjI2zcEKbQPnw-92nBMtn4z7GpKP2HVZABJc2KAdXH3knSBR643Lt0NJ7ILh~-3M84zSYi97bSbAUiUjsWnr95SDPDbcn0dAWgV8twc5tA1osfXGyoyYpESN7~6IID0xshp9Giu9o3hzNtiCsLDFkcEaeG~f3IaK5w__&Key-Pair-Id=KMHN1LQ1HEUPL", 
+        image: "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/4846/1738838534846-h",
+        runtime: "45 min",
+        rating: "8.2/10",
+        description: "With the release of River imminent, UDC believes himself safe. As time runs out, the Jackal must use all his skills to reach his target.",
+      },
+      { 
+        title: "Episode 10", 
+        year: 2024,
+        video: "https://macdn.hakunaymatata.com/resource/df4e756fb86cc165682d6427959de66d.mp4?Expires=1749546443&Signature=BXcHk3IeI0QAdmsPnAPTwWGVD1rHsVJWFXMRk7085Ayx1GcBd5VAr1t940ZMtpzg2LuR20BHYD8d13AVjMU5w-byqw~uxVx5UQfJaXRb3kicrVamP6Mjxt5gnW~6W5kg9RerKJowe0DQ8V1WjrgVzLKtzn9d5wMe9PE4fjpWKWuq3Y6gJ8iJcE7ckccsth9nmj0VftOx9D15MRierWPZykUnKPHZZqxoaa72q9Hci5H42rHvFxXVzJi1kXsHWEbxTrqnL636-3PpKIn27iZ99c-n~CKaYq6k78vXeXn1H7QvBh9MQWYqkzVMLeGZlRPv4nk58Nc1ArSkb5ZBtyoQ9Q__&Key-Pair-Id=KMHN1LQ1HEUPL", 
+        image: "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/4435/1738838534435-h",
+        runtime: "45 min",
+        rating: "8.2/10",
+        description: "A wanted man, the Jackal is on the run and desperate to get back to Nuria, but Bianca is given one last shot to bring him to justice.",
+      }
+    ];
 
-<div class="footer">
-  <div class="footer-links">
-    <a href="#" class="footer-link">About</a>
-    <a href="#" class="footer-link">Privacy Policy</a>
-    <a href="#" class="footer-link">Terms of Service</a>
-    <a href="#" class="footer-link">Contact</a>
-    <a href="#" class="footer-link">Help Center</a>
-  </div>
-  <p>© 2023 The Day of the Jackal. All rights reserved.</p>
-  <div class="social-links">
-    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
-    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-  </div>
-</div>
+    // Original Movie data
+    const originalMovie = {
+      title: "The Day of the Jackal (1973)",
+      year: 1973,
+      video: "https://macdn.hakunaymatata.com/resource/0f6b2960a01ecb6c5d520d8cf2557403.mp4?Expires=1749549945&Signature=xnwnPaynlL7K3syx6ogWAuA30gLx2uadkRuKoHspFuA1sNaiWw4PWIAkjHVXKx94kv2ZNblq-EyAbi1-JgKs4aIhHsACQPksF7KF6NAmvgynveZM2KN9tCxe0~tW0JB2jJWKlHVJaPtrRIeflDwsjv8eeK49AURpki46GAS9JyiuszoxZmdV7~wGQu8o43wwjO3L6DEM5DNd8dkurBtHI1sq7R21ksZDWnyzSb75foYsrr3z6P3uIrTz2iJTwiGzBiIIr-2BTHwQDytwNfyFedumYzocs9Po0zJxsrTKRKJBxGFIG2Dz3-PT8h2fQySPibtBIafGiP65dxNflBt-2A__&Key-Pair-Id=KMHN1LQ1HEUPL",
+      image: "https://ntvb.tmsimg.com/assets/p2497_v_h10_aa.jpg?w=1280&h=720",
+      runtime: "143 min",
+      rating: "7.8/10",
+      description: "A French paramilitary organization hires a professional assassin to kill President Charles de Gaulle, triggering an international manhunt in this classic thriller."
+    };
 
-<div class="loading" id="loading" style="display: none;">
-  <div class="spinner"></div>
-  <p class="loading-text">Loading content<span class="loading-dots"></span></p>
-</div>
+    // DOM elements
+    const episodesContainer = document.getElementById('episodes');
+    const originalMovieContainer = document.getElementById('original-movie');
+    const searchBtn = document.getElementById('search-btn');
+    const searchBar = document.getElementById('search-bar');
+    const themeToggle = document.getElementById('theme-toggle');
+    const playbackModal = document.getElementById('playback-modal');
+    const closeModal = document.getElementById('close-modal');
+    const modalVideo = document.getElementById('modal-video');
+    const modalTitle = document.getElementById('modal-title');
+    const modalDescription = document.getElementById('modal-description');
+    const episodeInfo = document.getElementById('episode-info');
+    const runtimeInfo = document.getElementById('runtime-info');
 
-<div class="fab" onclick="scrollToTop()">
-  <i class="fas fa-arrow-up"></i>
-</div>
+    // Initialize the page
+    function initPage() {
+      // Create episode cards
+      episodes.forEach((episode, index) => {
+        const card = document.createElement('div');
+        card.className = `movie-card fade-in delay-${index % 5} glow-effect`;
+        card.innerHTML = `
+          <div class="relative group overflow-hidden rounded-xl cursor-pointer">
+            <img src="${episode.image}" alt="${episode.title}" 
+                 class="w-full h-48 sm:h-56 md:h-64 object-cover rounded-xl transition duration-500 group-hover:scale-105">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+              <div>
+                <h3 class="text-white font-semibold text-lg">${episode.title}</h3>
+                <p class="text-gray-300 text-sm">${episode.runtime}</p>
+              </div>
+            </div>
+            <div class="absolute top-3 right-3 bg-black bg-opacity-70 text-yellow-500 rounded-full w-10 h-10 flex items-center justify-center">
+              <i class="fas fa-play"></i>
+            </div>
+          </div>
+          <div class="mt-3">
+            <h3 class="text-white font-medium">${episode.title}</h3>
+            <div class="flex items-center text-gray-400 text-sm mt-1">
+              <span>S1 • E${index + 1}</span>
+              <span class="mx-2">•</span>
+              <span>${episode.runtime}</span>
+            </div>
+          </div>
+        `;
+        
+        card.addEventListener('click', () => {
+          openModal(episode, index + 1, true);
+        });
+        
+        episodesContainer.appendChild(card);
+      });
 
-<div class="toast" id="toast">
-  <i class="fas fa-check-circle"></i>
-  <span id="toastMessage">Added to favorites!</span>
-</div>
+      // Create original movie card
+      const movieCard = document.createElement('div');
+      movieCard.className = `movie-card fade-in delay-1 glow-effect`;
+      movieCard.innerHTML = `
+        <div class="relative group overflow-hidden rounded-xl cursor-pointer">
+          <img src="${originalMovie.image}" alt="${originalMovie.title}" 
+               class="w-full h-48 sm:h-56 md:h-64 object-cover rounded-xl transition duration-500 group-hover:scale-105">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+            <div>
+              <h3 class="text-white font-semibold text-lg">${originalMovie.title}</h3>
+              <p class="text-gray-300 text-sm">${originalMovie.runtime}</p>
+            </div>
+          </div>
+          <div class="absolute top-3 right-3 bg-black bg-opacity-70 text-yellow-500 rounded-full w-10 h-10 flex items-center justify-center">
+            <i class="fas fa-play"></i>
+          </div>
+        </div>
+        <div class="mt-3">
+          <h3 class="text-white font-medium">${originalMovie.title}</h3>
+          <div class="flex items-center text-gray-400 text-sm mt-1">
+            <span>${originalMovie.year}</span>
+            <span class="mx-2">•</span>
+            <span>${originalMovie.runtime}</span>
+          </div>
+        </div>
+      `;
+      
+      movieCard.addEventListener('click', () => {
+        openModal(originalMovie, null, false);
+      });
+      
+      originalMovieContainer.appendChild(movieCard);
 
-<script>
-// Enhanced data structure
-const contentData = {
-  "movies": [
-    {
-      "title": "The Day of the Jackal (1973)",
-      "image": "https://i.etsystatic.com/17287922/r/il/bc7268/3613159287/il_1080xN.3613159287_qqvy.jpg",
-      "year": "1973",
-      "duration": "143 min",
-      "rating": "8.0",
-      "description": "A professional assassin known only as 'The Jackal' is hired to kill French president Charles de Gaulle. As the authorities close in, the Jackal employs ever more elaborate methods to outwit his pursuers.",
-      "video": "https://macdn.hakunaymatata.com/resource/0f6b2960a01ecb6c5d520d8cf2557403.mp4?Expires=1749420958&Signature=DSkebjApY4LWVSPMXfhJSXHCLBaNKtbuKM8JZOEetEOgoTf~RmkATSB2AAs2dV6J01ojN656bjdEIYrZ0G0eccIsloZvrs-GDWvc0TdVmhVuyuKIHY0M~mQm1M2xpNhE2nC20Ziqf0b-PVOWFUDaT9um5QcErxXJSGyPDAIzvG7ffZSIYe5Y8Q187leYGFONWipZ7iwHguNNAHLm7~oLoG0Gb~yWTBoU6pfzR8yDf2v-u676EMG0JG-D3OL9ywVj6Kz4oSopJLcmrC1MiUMrx19XtP0OOghxzYvExKFmU0KEwPh52Y9PWJgjcCy5U4o9u0fhQBoEe0wFI6RvNs~E5g__&Key-Pair-Id=KMHN1LQ1HEUPL",
-      "isFavorite": false
-    },
-    {
-      "title": "The Jackal (1997)",
-      "image": "https://m.media-amazon.com/images/M/MV5BNDk0OGI5M2MtYTQ4YS00YzNkLWE0ZTktYTJiOTAyY2QyYWNkXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_.jpg",
-      "year": "1997",
-      "duration": "124 min",
-      "rating": "6.4",
-      "description": "A modern reimagining of the original story, featuring an international assassin pursued by the FBI and a former IRA operative who is released from prison to help track him down.",
-      "video": "https://example.com/videos/jackal1997.mp4",
-      "isFavorite": false
+      // Filter buttons
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelector('.filter-btn.active').classList.remove('active', 'bg-yellow-600', 'text-black');
+          this.classList.add('active', 'bg-yellow-600', 'text-black');
+        });
+      });
     }
-  ],
-  "series": [
-    {
-      "title": "The Day of the Jackal - Season 1",
-      "image": "https://image.tmdb.org/t/p/original/4kk77Ygb9soy5HQ4KBPQ9c1jXNN.jpg",
-      "year": "2023",
-      "duration": "10 Episodes",
-      "rating": "7.5",
-      "description": "A modern adaptation of the classic thriller, following an assassin hired to kill a high-profile political figure. This series expands on the original story with new twists and deeper character development.",
-      "episodes": [
-        "https://zq62mmaomhqa.cdn-centaurus.com:443/hls2/01/05485/lq8ij0odfolr_,l,n,h,.urlset/index-f3-v1-a1.m3u8?t=8Y9HHu_Adbn1wUJtUazRK5dUJuaP5kpeMsIFsXjOZCQ&s=1747681536&e=129600&f=27428867&srv=6wyav2r9i6j&i=0.4&sp=500&p1=6wyav2r9i6j&p2=6wyav2r9i6j&asn=24554",
-        "https://sxic.cortinala.sbs/v4/sc/6d3sg/index-f1-v1-a1.txt",
-        "https://sojg.feistjmyrodne.sbs/v4/db/hjvkl/index-f1-v1-a1.txt",
-        "https://sdqm.sralphqesrob.sbs:443/v4/db/p8wod/index-f2-v1-a1.txt",
-        "https://ngr2dnwrdasv7gvg.cdn-centaurus.com/hls2/01/05485/xpi1gf4j9obi_,l,n,h,.urlset/master.m3u8?t=7Q9oL70TRZ_COUZPKZ5E6jTY7nt7lK-I30xWaM0jND4&s=1747681608&e=129600&f=27429238&srv=galk8e9m4l6if&i=0.4&sp=500&p1=galk8e9m4l6if&p2=galk8e9m4l6if&asn=24554",
-        "https://spuc.angelobo.sbs/v4/sc/931r3/index-f1-v1-a1.txt",
-        "https://spuc.gatesnationjyd.sbs/v4/ck/8bnbk/index-f1-v1.txt",
-        "https://scvo.desrocherswick.sbs/v4/61/xoo3j/index-f1-v1-a1.txt",
-        "https://gs2xxawljjoi.cdn-centaurus.com:443/hls2/01/06989/3iblersorv5c_n/index-v1-a1.m3u8?t=3iqN4tcWqpr10pYnLFWzm_7XoARLjCQapDbqaUrgN2U&s=1747680990&e=129600&f=34950830&srv=fbIjIZy3pIBwE0S&i=0.4&sp=500&p1=fbIjIZy3pIBwE0S&p2=fbIjIZy3pIBwE0S&asn=24554",
-        "https://sr81.garnicaniibreslin.sbs/v4/hz/ecj16/index-f1-v1-a1.txt"
-      ],
-      "isFavorite": false
+
+    // Open modal with movie details
+    function openModal(item, episodeNumber, isEpisode) {
+      modalTitle.textContent = item.title;
+      modalDescription.textContent = item.description;
+      runtimeInfo.textContent = item.runtime;
+      
+      if (isEpisode) {
+        episodeInfo.textContent = `S1 • E${episodeNumber}`;
+      } else {
+        episodeInfo.textContent = item.year;
+      }
+      
+      modalVideo.src = item.video;
+      
+      playbackModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
     }
-  ]
-};
 
-// Initialize favorites from localStorage
-let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    // Close modal
+    function closeModalHandler() {
+      playbackModal.classList.add('hidden');
+      modalVideo.pause();
+      document.body.style.overflow = '';
+    }
 
-// Enhanced playVideo function
-function playVideo(title, videoUrl) {
-  showLoading();
-  
-  // Simulate loading delay
-  setTimeout(() => {
-    hideLoading();
-    
-    // In a real app, this would redirect to the player page
-    // window.location.href = `player.html?title=${encodeURIComponent(title)}&video=${encodeURIComponent(videoUrl)}`;
-    
-    // For demo purposes, show a toast
-    showToast(`Now playing: ${title}`);
-    
-    // Track recently watched
-    trackRecentlyWatched(title, videoUrl);
-  }, 1500);
-}
-
-// Enhanced toggleEpisodes function
-function toggleEpisodes(event) {
-  event.stopPropagation();
-  const card = document.getElementById('seriesCard');
-  const list = document.getElementById('episodeList');
-  
-  if (list.style.display === 'block') {
-    list.style.display = 'none';
-    card.classList.remove('active');
-    return;
-  }
-  
-  if (list.innerHTML === '') {
-    const series = contentData.series[0];
-    series.episodes.forEach((link, i) => {
-      const ep = document.createElement('a');
-      ep.className = 'episode-link';
-      ep.innerHTML = `<span>Episode ${i + 1}: ${getEpisodeTitle(i)}</span> <i class="fas fa-play"></i>`;
-      ep.onclick = (e) => {
-        e.stopPropagation();
-        playVideo(`The Day of the Jackal - S01E${String(i + 1).padStart(2, '0')}`, link);
-      };
-      list.appendChild(ep);
+    // Event listeners
+    searchBtn.addEventListener('click', () => {
+      searchBar.classList.toggle('hidden');
     });
-  }
-  
-  list.style.display = 'block';
-  card.classList.add('active');
-}
 
-function getEpisodeTitle(index) {
-  const titles = [
-    "The Assignment",
-    "The Preparation",
-    "The Identity",
-    "The Journey",
-    "The Hunt Begins",
-    "Close Call",
-    "Changing Tactics",
-    "The Trap",
-    "Showdown",
-    "Aftermath"
-  ];
-  return titles[index] || `Episode ${index + 1}`;
-}
-
-// Show loading animation
-function showLoading() {
-  const loading = document.getElementById('loading');
-  const dots = loading.querySelector('.loading-dots');
-  
-  loading.style.display = 'flex';
-  
-  // Animate dots
-  let dotCount = 0;
-  const dotInterval = setInterval(() => {
-    dotCount = (dotCount + 1) % 4;
-    dots.textContent = '.'.repeat(dotCount);
-  }, 500);
-  
-  // Store interval ID to clear later
-  loading.dataset.intervalId = dotInterval;
-}
-
-// Hide loading animation
-function hideLoading() {
-  const loading = document.getElementById('loading');
-  clearInterval(loading.dataset.intervalId);
-  loading.style.display = 'none';
-}
-
-// Filter content by type
-function filterContent(type) {
-  const tabs = document.querySelectorAll('.nav-tab');
-  tabs.forEach(tab => tab.classList.remove('active'));
-  event.target.classList.add('active');
-  
-  const cards = document.querySelectorAll('.card');
-  cards.forEach(card => card.style.display = 'none');
-  
-  if (type === 'all') {
-    cards.forEach(card => card.style.display = 'block');
-  } else if (type === 'favorites') {
-    // Show only favorites
-    cards.forEach(card => {
-      const title = card.querySelector('.card-title span').textContent;
-      if (favorites.includes(title)) {
-        card.style.display = 'block';
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('bg-gray-100');
+      document.body.classList.toggle('text-gray-900');
+      document.body.classList.toggle('bg-black');
+      document.body.classList.toggle('text-gray-100');
+      
+      const icon = themeToggle.querySelector('i');
+      if (document.body.classList.contains('bg-black')) {
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+      } else {
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
       }
     });
-  } else {
-    // Show by type (movie/series)
-    const typeCards = document.querySelectorAll(`.card[data-type="${type}"]`);
-    typeCards.forEach(card => card.style.display = 'block');
-  }
-}
 
-// Search titles
-function searchTitles() {
-  const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-  const cards = document.querySelectorAll('.card');
-  
-  cards.forEach(card => {
-    const title = card.querySelector('.card-title span').textContent.toLowerCase();
-    const description = card.querySelector('.card-description').textContent.toLowerCase();
-    
-    if (title.includes(searchTerm) || description.includes(searchTerm)) {
-      card.style.display = 'block';
-    } else {
-      card.style.display = 'none';
-    }
-  });
-}
+    closeModal.addEventListener('click', closeModalHandler);
+    playbackModal.addEventListener('click', function(e) {
+      if (e.target === this) closeModalHandler();
+    });
 
-// Add to favorites
-function addToFavorites(title) {
-  event.stopPropagation();
-  
-  const index = favorites.indexOf(title);
-  if (index === -1) {
-    favorites.push(title);
-    showToast(`Added to favorites: ${title}`);
-  } else {
-    favorites.splice(index, 1);
-    showToast(`Removed from favorites: ${title}`);
-  }
-  
-  // Update localStorage
-  localStorage.setItem('favorites', JSON.stringify(favorites));
-  
-  // Update UI if on favorites tab
-  if (document.querySelector('.nav-tab.active').textContent.includes('Favorites')) {
-    filterContent('favorites');
-  }
-}
-
-// Show toast notification
-function showToast(message) {
-  const toast = document.getElementById('toast');
-  const toastMessage = document.getElementById('toastMessage');
-  
-  toastMessage.textContent = message;
-  toast.classList.add('show');
-  
-  setTimeout(() => {
-    toast.classList.remove('show');
-  }, 3000);
-}
-
-// Show details modal (simplified for demo)
-function showDetails(title) {
-  event.stopPropagation();
-  showToast(`Showing details for: ${title}`);
-}
-
-// Track recently watched
-function trackRecentlyWatched(title, url) {
-  let history = JSON.parse(localStorage.getItem('watchHistory')) || [];
-  
-  // Remove if already exists
-  history = history.filter(item => item.title !== title);
-  
-  // Add to beginning
-  history.unshift({ title, url, date: new Date().toISOString() });
-  
-  // Keep only last 10 items
-  if (history.length > 10) {
-    history = history.slice(0, 10);
-  }
-  
-  localStorage.setItem('watchHistory', JSON.stringify(history));
-}
-
-// Scroll to top
-function scrollToTop() {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
-}
-
-// Initialize content
-document.addEventListener('DOMContentLoaded', () => {
-  // Set active tab
-  document.querySelector('.nav-tab').classList.add('active');
-  
-  // Add event listeners for keyboard navigation
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      const list = document.getElementById('episodeList');
-      if (list.style.display === 'block') {
-        list.style.display = 'none';
-        document.getElementById('seriesCard').classList.remove('active');
-      }
-    }
-  });
-  
-  // Animate dots in loading text
-  const dots = document.querySelector('.loading-dots');
-  if (dots) {
-    let dotCount = 0;
-    setInterval(() => {
-      dotCount = (dotCount + 1) % 4;
-      dots.textContent = '.'.repeat(dotCount);
-    }, 500);
-  }
-  
-  // Show scroll-to-top button when scrolling
-  window.addEventListener('scroll', () => {
-    const fab = document.querySelector('.fab');
-    if (window.scrollY > 300) {
-      fab.style.opacity = '1';
-      fab.style.visibility = 'visible';
-    } else {
-      fab.style.opacity = '0';
-      fab.style.visibility = 'hidden';
-    }
-  });
-});
-
-</script>
-
+    // Initialize the page when loaded
+    window.addEventListener('DOMContentLoaded', initPage);
+  </script>
 </body>
 </html>
