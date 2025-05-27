@@ -14,6 +14,12 @@
       --card-bg: #1c1c1c;
       --hover-bg: #2a2a2a;
       --text-light: #f5f5f5;
+      --accent: #e63946;
+    }
+
+    @font-face {
+      font-family: 'Cinzel';
+      src: url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
     }
 
     body {
@@ -24,6 +30,7 @@
       padding: 0;
       min-height: 100vh;
       overflow-x: hidden;
+      background-image: radial-gradient(circle at 50% 50%, rgba(255, 204, 0, 0.03) 0%, transparent 50%);
     }
 
     .header {
@@ -36,15 +43,57 @@
     }
 
     h1 {
-      font-size: 2.5rem;
-      letter-spacing: 1px;
+      font-family: 'Cinzel', serif;
+      font-size: 2.8rem;
+      letter-spacing: 2px;
       margin: 0;
       color: var(--gold);
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.75rem;
+      gap: 1rem;
+      position: relative;
+    }
+
+    h1::before, h1::after {
+      content: "✧";
+      color: var(--gold);
+      font-size: 1.5rem;
+      opacity: 0.7;
+    }
+
+    .nav-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .nav-tab {
+      color: rgba(255, 255, 255, 0.7);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      position: relative;
+    }
+
+    .nav-tab.active, .nav-tab:hover {
+      color: var(--gold);
+      background: rgba(255, 204, 0, 0.1);
+    }
+
+    .nav-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 2px;
+      background: var(--gold);
     }
 
     .content {
@@ -60,12 +109,12 @@
     .card {
       background: var(--card-bg);
       border-radius: 14px;
-      width: 280px;
+      width: 300px;
       cursor: pointer;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
       transition: all 0.3s ease;
       overflow: hidden;
-      border: 1px solid var(--gold);
+      border: 1px solid rgba(255, 204, 0, 0.3);
       position: relative;
     }
 
@@ -73,12 +122,13 @@
       transform: translateY(-8px);
       box-shadow: 0 12px 25px rgba(0, 0, 0, 0.6);
       background: var(--hover-bg);
+      border-color: var(--gold);
     }
 
     .card-img-container {
       position: relative;
       width: 100%;
-      height: 380px;
+      height: 400px;
       overflow: hidden;
     }
 
@@ -100,31 +150,97 @@
       right: 10px;
       background-color: rgba(0, 0, 0, 0.7);
       color: var(--gold);
-      padding: 4px 8px;
-      border-radius: 4px;
+      padding: 4px 10px;
+      border-radius: 20px;
       font-size: 0.75rem;
       font-weight: bold;
       z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .card-badge.new {
+      background-color: var(--accent);
+      color: white;
+    }
+
+    .card-info {
+      padding: 1rem;
+      background: rgba(0, 0, 0, 0.5);
+      border-top: 1px solid rgba(255, 204, 0, 0.2);
     }
 
     .card-title {
       font-weight: 600;
-      padding: 1rem;
-      font-size: 1.05rem;
-      border-top: 1px solid var(--gold);
-      background: rgba(0, 0, 0, 0.5);
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
-    .card-title i {
-      color: var(--gold);
-      transition: transform 0.3s ease;
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.85rem;
+      margin-bottom: 0.5rem;
     }
 
-    .card.active .card-title i {
-      transform: rotate(180deg);
+    .card-rating {
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .card-description {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin-top: 0.5rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1rem;
+    }
+
+    .card-btn {
+      background: rgba(255, 204, 0, 0.1);
+      color: var(--gold);
+      border: 1px solid rgba(255, 204, 0, 0.3);
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-btn:hover {
+      background: var(--gold);
+      color: #000;
+      border-color: var(--gold);
+    }
+
+    .card-btn.secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: rgba(255, 255, 255, 0.8);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .card-btn.secondary:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
     }
 
     .episodes {
@@ -179,7 +295,7 @@
 
     .footer {
       background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
-      padding: 1.5rem;
+      padding: 2rem;
       text-align: center;
       color: rgba(255, 255, 255, 0.7);
       font-size: 0.9rem;
@@ -187,46 +303,43 @@
       margin-top: 2rem;
     }
 
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-link {
+      color: rgba(255, 255, 255, 0.7);
+      transition: color 0.2s;
+    }
+
+    .footer-link:hover {
+      color: var(--gold);
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .social-link {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 1.2rem;
+      transition: all 0.2s;
+    }
+
+    .social-link:hover {
+      color: var(--gold);
+      transform: translateY(-2px);
+    }
+
     @keyframes dropdown {
       from { opacity: 0; max-height: 0; }
       to { opacity: 1; max-height: 300px; }
-    }
-
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 1.8rem;
-      }
-      
-      .content {
-        flex-direction: column;
-        align-items: center;
-        padding: 1rem;
-      }
-
-      .card {
-        width: 100%;
-        max-width: 350px;
-      }
-
-      .card-img-container {
-        height: 300px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 1.5rem;
-      }
-      
-      .card-title {
-        font-size: 1rem;
-        padding: 0.75rem;
-      }
-      
-      .episode-link {
-        padding: 0.6rem 0.75rem;
-        font-size: 0.9rem;
-      }
     }
 
     /* Loading animation */
@@ -237,7 +350,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.8);
+      background-color: rgba(0, 0, 0, 0.9);
       z-index: 1000;
       display: flex;
       justify-content: center;
@@ -246,94 +359,430 @@
     }
 
     .spinner {
-      width: 50px;
-      height: 50px;
+      width: 60px;
+      height: 60px;
       border: 5px solid rgba(255, 204, 0, 0.3);
       border-radius: 50%;
       border-top-color: var(--gold);
       animation: spin 1s ease-in-out infinite;
     }
 
+    .loading-text {
+      color: var(--gold);
+      margin-top: 1.5rem;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+      text-align: center;
+      max-width: 300px;
+    }
+
+    .loading-dots {
+      display: inline-block;
+      width: 20px;
+      text-align: left;
+    }
+
     @keyframes spin {
       to { transform: rotate(360deg); }
+    }
+
+    @keyframes dots {
+      0%, 20% { content: '.'; }
+      40% { content: '..'; }
+      60% { content: '...'; }
+      80%, 100% { content: ''; }
+    }
+
+    /* Search bar */
+    .search-container {
+      max-width: 600px;
+      margin: 1.5rem auto 0;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.8rem 1.5rem;
+      border-radius: 30px;
+      border: none;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 1rem;
+      padding-left: 3rem;
+      transition: all 0.3s;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .search-input:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 204, 0, 0.5);
+      box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.2);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* Responsive styles */
+    @media (max-width: 1024px) {
+      .card {
+        width: 280px;
+      }
+      
+      .card-img-container {
+        height: 380px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .content {
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 400px;
+      }
+
+      .card-img-container {
+        height: 350px;
+      }
+      
+      .nav-tabs {
+        gap: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.6rem;
+      }
+      
+      .card-title {
+        font-size: 1rem;
+      }
+      
+      .episode-link {
+        padding: 0.6rem 0.75rem;
+        font-size: 0.9rem;
+      }
+      
+      .nav-tabs {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      
+      .nav-tab {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+      }
+      
+      .footer-links {
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+    }
+
+    /* Floating action button */
+    .fab {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--gold);
+      color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      z-index: 100;
+      transition: all 0.3s;
+    }
+
+    .fab:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Toast notification */
+    .toast {
+      position: fixed;
+      bottom: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gold);
+      color: #000;
+      padding: 0.8rem 1.5rem;
+      border-radius: 4px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      transition: bottom 0.4s ease;
+    }
+
+    .toast.show {
+      bottom: 2rem;
+    }
+
+    .toast i {
+      font-size: 1.2rem;
     }
   </style>
 </head>
 <body>
 
 <div class="header">
-  <h1><i class="fas fa-crown"></i> The Day of the Jackal <i class="fas fa-crown"></i></h1>
+  <h1>The Day of the Jackal</h1>
+  
+  <div class="nav-tabs">
+    <div class="nav-tab active" onclick="filterContent('all')">
+      <i class="fas fa-th-large"></i> All
+    </div>
+    <div class="nav-tab" onclick="filterContent('movies')">
+      <i class="fas fa-film"></i> Movies
+    </div>
+    <div class="nav-tab" onclick="filterContent('series')">
+      <i class="fas fa-tv"></i> Series
+    </div>
+    <div class="nav-tab" onclick="filterContent('favorites')">
+      <i class="fas fa-heart"></i> Favorites
+    </div>
+  </div>
+  
+  <div class="search-container">
+    <i class="fas fa-search search-icon"></i>
+    <input type="text" class="search-input" placeholder="Search titles..." id="searchInput" oninput="searchTitles()">
+  </div>
 </div>
 
-<div class="content">
+<div class="content" id="contentContainer">
 
   <!-- Movie Card -->
-  <div class="card" onclick="playVideo('The Day of the Jackal (1973)', 'https://macdn.hakunaymatata.com/resource/0f6b2960a01ecb6c5d520d8cf2557403.mp4?Expires=1749420958&Signature=DSkebjApY4LWVSPMXfhJSXHCLBaNKtbuKM8JZOEetEOgoTf~RmkATSB2AAs2dV6J01ojN656bjdEIYrZ0G0eccIsloZvrs-GDWvc0TdVmhVuyuKIHY0M~mQm1M2xpNhE2nC20Ziqf0b-PVOWFUDaT9um5QcErxXJSGyPDAIzvG7ffZSIYe5Y8Q187leYGFONWipZ7iwHguNNAHLm7~oLoG0Gb~yWTBoU6pfzR8yDf2v-u676EMG0JG-D3OL9ywVj6Kz4oSopJLcmrC1MiUMrx19XtP0OOghxzYvExKFmU0KEwPh52Y9PWJgjcCy5U4o9u0fhQBoEe0wFI6RvNs~E5g__&Key-Pair-Id=KMHN1LQ1HEUPL')">
+  <div class="card" data-type="movie" onclick="playVideo('The Day of the Jackal (1973)', 'https://macdn.hakunaymatata.com/resource/0f6b2960a01ecb6c5d520d8cf2557403.mp4?Expires=1749420958&Signature=DSkebjApY4LWVSPMXfhJSXHCLBaNKtbuKM8JZOEetEOgoTf~RmkATSB2AAs2dV6J01ojN656bjdEIYrZ0G0eccIsloZvrs-GDWvc0TdVmhVuyuKIHY0M~mQm1M2xpNhE2nC20Ziqf0b-PVOWFUDaT9um5QcErxXJSGyPDAIzvG7ffZSIYe5Y8Q187leYGFONWipZ7iwHguNNAHLm7~oLoG0Gb~yWTBoU6pfzR8yDf2v-u676EMG0JG-D3OL9ywVj6Kz4oSopJLcmrC1MiUMrx19XtP0OOghxzYvExKFmU0KEwPh52Y9PWJgjcCy5U4o9u0fhQBoEe0wFI6RvNs~E5g__&Key-Pair-Id=KMHN1LQ1HEUPL')">
     <div class="card-img-container">
       <img src="https://i.etsystatic.com/17287922/r/il/bc7268/3613159287/il_1080xN.3613159287_qqvy.jpg" alt="The Day of the Jackal Movie">
-      <div class="card-badge">HD</div>
+      <div class="card-badge">
+        <i class="fas fa-star"></i> HD
+      </div>
     </div>
-    <div class="card-title">
-      <span><i class="fas fa-film"></i> Movie: The Day of the Jackal (1973)</span>
-      <i class="fas fa-play"></i>
+    <div class="card-info">
+      <div class="card-title">
+        <span>The Day of the Jackal</span>
+        <div class="card-rating">
+          <i class="fas fa-star"></i> 8.0
+        </div>
+      </div>
+      <div class="card-meta">
+        <span>1973</span>
+        <span>143 min</span>
+      </div>
+      <div class="card-description">
+        A professional assassin known only as "The Jackal" is hired to kill French president Charles de Gaulle. As the authorities close in, the Jackal employs ever more elaborate methods to outwit his pursuers.
+      </div>
+      <div class="card-actions">
+        <button class="card-btn" onclick="event.stopPropagation(); addToFavorites('The Day of the Jackal (1973)')">
+          <i class="fas fa-heart"></i> Favorite
+        </button>
+        <button class="card-btn secondary" onclick="event.stopPropagation(); showDetails('The Day of the Jackal (1973)')">
+          <i class="fas fa-info-circle"></i> Details
+        </button>
+      </div>
     </div>
   </div>
 
   <!-- Series Card -->
-  <div class="card" id="seriesCard">
+  <div class="card" id="seriesCard" data-type="series">
     <div class="card-img-container">
       <img src="https://image.tmdb.org/t/p/original/4kk77Ygb9soy5HQ4KBPQ9c1jXNN.jpg" alt="The Day of the Jackal Series">
-      <div class="card-badge">NEW</div>
+      <div class="card-badge new">
+        <i class="fas fa-bolt"></i> NEW
+      </div>
     </div>
-    <div class="card-title" onclick="toggleEpisodes()">
-      <span><i class="fas fa-tv"></i> Series: The Day of the Jackal - Season 1</span>
-      <i class="fas fa-chevron-down"></i>
+    <div class="card-info">
+      <div class="card-title" onclick="toggleEpisodes(event)">
+        <span>The Day of the Jackal - Season 1</span>
+        <div class="card-rating">
+          <i class="fas fa-star"></i> 7.5
+        </div>
+      </div>
+      <div class="card-meta">
+        <span>2023</span>
+        <span>10 Episodes</span>
+      </div>
+      <div class="card-description">
+        A modern adaptation of the classic thriller, following an assassin hired to kill a high-profile political figure. This series expands on the original story with new twists and deeper character development.
+      </div>
+      <div class="card-actions">
+        <button class="card-btn" onclick="event.stopPropagation(); addToFavorites('The Day of the Jackal - Season 1')">
+          <i class="fas fa-heart"></i> Favorite
+        </button>
+        <button class="card-btn secondary" onclick="event.stopPropagation(); showDetails('The Day of the Jackal - Season 1')">
+          <i class="fas fa-info-circle"></i> Details
+        </button>
+      </div>
     </div>
     <div class="episodes" id="episodeList"></div>
+  </div>
+
+  <!-- Additional Movie Card -->
+  <div class="card" data-type="movie" onclick="playVideo('The Jackal (1997)', 'https://example.com/videos/jackal1997.mp4')">
+    <div class="card-img-container">
+      <img src="https://m.media-amazon.com/images/M/MV5BNDk0OGI5M2MtYTQ4YS00YzNkLWE0ZTktYTJiOTAyY2QyYWNkXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_.jpg" alt="The Jackal Movie">
+      <div class="card-badge">
+        <i class="fas fa-star"></i> HD
+      </div>
+    </div>
+    <div class="card-info">
+      <div class="card-title">
+        <span>The Jackal</span>
+        <div class="card-rating">
+          <i class="fas fa-star"></i> 6.4
+        </div>
+      </div>
+      <div class="card-meta">
+        <span>1997</span>
+        <span>124 min</span>
+      </div>
+      <div class="card-description">
+        A modern reimagining of the original story, featuring an international assassin pursued by the FBI and a former IRA operative who is released from prison to help track him down.
+      </div>
+      <div class="card-actions">
+        <button class="card-btn" onclick="event.stopPropagation(); addToFavorites('The Jackal (1997)')">
+          <i class="fas fa-heart"></i> Favorite
+        </button>
+        <button class="card-btn secondary" onclick="event.stopPropagation(); showDetails('The Jackal (1997)')">
+          <i class="fas fa-info-circle"></i> Details
+        </button>
+      </div>
+    </div>
   </div>
 
 </div>
 
 <div class="footer">
+  <div class="footer-links">
+    <a href="#" class="footer-link">About</a>
+    <a href="#" class="footer-link">Privacy Policy</a>
+    <a href="#" class="footer-link">Terms of Service</a>
+    <a href="#" class="footer-link">Contact</a>
+    <a href="#" class="footer-link">Help Center</a>
+  </div>
   <p>© 2023 The Day of the Jackal. All rights reserved.</p>
-  <div class="mt-2">
-    <a href="#" class="text-gray-400 hover:text-yellow-400 mx-2"><i class="fab fa-facebook"></i></a>
-    <a href="#" class="text-gray-400 hover:text-yellow-400 mx-2"><i class="fab fa-twitter"></i></a>
-    <a href="#" class="text-gray-400 hover:text-yellow-400 mx-2"><i class="fab fa-instagram"></i></a>
+  <div class="social-links">
+    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
   </div>
 </div>
 
 <div class="loading" id="loading" style="display: none;">
   <div class="spinner"></div>
-  <p class="text-yellow-400 mt-4">Loading content...</p>
+  <p class="loading-text">Loading content<span class="loading-dots"></span></p>
+</div>
+
+<div class="fab" onclick="scrollToTop()">
+  <i class="fas fa-arrow-up"></i>
+</div>
+
+<div class="toast" id="toast">
+  <i class="fas fa-check-circle"></i>
+  <span id="toastMessage">Added to favorites!</span>
 </div>
 
 <script>
-const seriesEpisodes = [
-  "https://zq62mmaomhqa.cdn-centaurus.com:443/hls2/01/05485/lq8ij0odfolr_,l,n,h,.urlset/index-f3-v1-a1.m3u8?t=8Y9HHu_Adbn1wUJtUazRK5dUJuaP5kpeMsIFsXjOZCQ&s=1747681536&e=129600&f=27428867&srv=6wyav2r9i6j&i=0.4&sp=500&p1=6wyav2r9i6j&p2=6wyav2r9i6j&asn=24554",
-  "https://sxic.cortinala.sbs/v4/sc/6d3sg/index-f1-v1-a1.txt",
-  "https://sojg.feistjmyrodne.sbs/v4/db/hjvkl/index-f1-v1-a1.txt",
-  "https://sdqm.sralphqesrob.sbs:443/v4/db/p8wod/index-f2-v1-a1.txt",
-  "https://ngr2dnwrdasv7gvg.cdn-centaurus.com/hls2/01/05485/xpi1gf4j9obi_,l,n,h,.urlset/master.m3u8?t=7Q9oL70TRZ_COUZPKZ5E6jTY7nt7lK-I30xWaM0jND4&s=1747681608&e=129600&f=27429238&srv=galk8e9m4l6if&i=0.4&sp=500&p1=galk8e9m4l6if&p2=galk8e9m4l6if&asn=24554",
-  "https://spuc.angelobo.sbs/v4/sc/931r3/index-f1-v1-a1.txt",
-  "https://spuc.gatesnationjyd.sbs/v4/ck/8bnbk/index-f1-v1.txt",
-  "https://scvo.desrocherswick.sbs/v4/61/xoo3j/index-f1-v1-a1.txt",
-  "https://gs2xxawljjoi.cdn-centaurus.com:443/hls2/01/06989/3iblersorv5c_n/index-v1-a1.m3u8?t=3iqN4tcWqpr10pYnLFWzm_7XoARLjCQapDbqaUrgN2U&s=1747680990&e=129600&f=34950830&srv=fbIjIZy3pIBwE0S&i=0.4&sp=500&p1=fbIjIZy3pIBwE0S&p2=fbIjIZy3pIBwE0S&asn=24554",
-  "https://sr81.garnicaniibreslin.sbs/v4/hz/ecj16/index-f1-v1-a1.txt"
-];
+// Enhanced data structure
+const contentData = {
+  "movies": [
+    {
+      "title": "The Day of the Jackal (1973)",
+      "image": "https://i.etsystatic.com/17287922/r/il/bc7268/3613159287/il_1080xN.3613159287_qqvy.jpg",
+      "year": "1973",
+      "duration": "143 min",
+      "rating": "8.0",
+      "description": "A professional assassin known only as 'The Jackal' is hired to kill French president Charles de Gaulle. As the authorities close in, the Jackal employs ever more elaborate methods to outwit his pursuers.",
+      "video": "https://macdn.hakunaymatata.com/resource/0f6b2960a01ecb6c5d520d8cf2557403.mp4?Expires=1749420958&Signature=DSkebjApY4LWVSPMXfhJSXHCLBaNKtbuKM8JZOEetEOgoTf~RmkATSB2AAs2dV6J01ojN656bjdEIYrZ0G0eccIsloZvrs-GDWvc0TdVmhVuyuKIHY0M~mQm1M2xpNhE2nC20Ziqf0b-PVOWFUDaT9um5QcErxXJSGyPDAIzvG7ffZSIYe5Y8Q187leYGFONWipZ7iwHguNNAHLm7~oLoG0Gb~yWTBoU6pfzR8yDf2v-u676EMG0JG-D3OL9ywVj6Kz4oSopJLcmrC1MiUMrx19XtP0OOghxzYvExKFmU0KEwPh52Y9PWJgjcCy5U4o9u0fhQBoEe0wFI6RvNs~E5g__&Key-Pair-Id=KMHN1LQ1HEUPL",
+      "isFavorite": false
+    },
+    {
+      "title": "The Jackal (1997)",
+      "image": "https://m.media-amazon.com/images/M/MV5BNDk0OGI5M2MtYTQ4YS00YzNkLWE0ZTktYTJiOTAyY2QyYWNkXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_.jpg",
+      "year": "1997",
+      "duration": "124 min",
+      "rating": "6.4",
+      "description": "A modern reimagining of the original story, featuring an international assassin pursued by the FBI and a former IRA operative who is released from prison to help track him down.",
+      "video": "https://example.com/videos/jackal1997.mp4",
+      "isFavorite": false
+    }
+  ],
+  "series": [
+    {
+      "title": "The Day of the Jackal - Season 1",
+      "image": "https://image.tmdb.org/t/p/original/4kk77Ygb9soy5HQ4KBPQ9c1jXNN.jpg",
+      "year": "2023",
+      "duration": "10 Episodes",
+      "rating": "7.5",
+      "description": "A modern adaptation of the classic thriller, following an assassin hired to kill a high-profile political figure. This series expands on the original story with new twists and deeper character development.",
+      "episodes": [
+        "https://zq62mmaomhqa.cdn-centaurus.com:443/hls2/01/05485/lq8ij0odfolr_,l,n,h,.urlset/index-f3-v1-a1.m3u8?t=8Y9HHu_Adbn1wUJtUazRK5dUJuaP5kpeMsIFsXjOZCQ&s=1747681536&e=129600&f=27428867&srv=6wyav2r9i6j&i=0.4&sp=500&p1=6wyav2r9i6j&p2=6wyav2r9i6j&asn=24554",
+        "https://sxic.cortinala.sbs/v4/sc/6d3sg/index-f1-v1-a1.txt",
+        "https://sojg.feistjmyrodne.sbs/v4/db/hjvkl/index-f1-v1-a1.txt",
+        "https://sdqm.sralphqesrob.sbs:443/v4/db/p8wod/index-f2-v1-a1.txt",
+        "https://ngr2dnwrdasv7gvg.cdn-centaurus.com/hls2/01/05485/xpi1gf4j9obi_,l,n,h,.urlset/master.m3u8?t=7Q9oL70TRZ_COUZPKZ5E6jTY7nt7lK-I30xWaM0jND4&s=1747681608&e=129600&f=27429238&srv=galk8e9m4l6if&i=0.4&sp=500&p1=galk8e9m4l6if&p2=galk8e9m4l6if&asn=24554",
+        "https://spuc.angelobo.sbs/v4/sc/931r3/index-f1-v1-a1.txt",
+        "https://spuc.gatesnationjyd.sbs/v4/ck/8bnbk/index-f1-v1.txt",
+        "https://scvo.desrocherswick.sbs/v4/61/xoo3j/index-f1-v1-a1.txt",
+        "https://gs2xxawljjoi.cdn-centaurus.com:443/hls2/01/06989/3iblersorv5c_n/index-v1-a1.m3u8?t=3iqN4tcWqpr10pYnLFWzm_7XoARLjCQapDbqaUrgN2U&s=1747680990&e=129600&f=34950830&srv=fbIjIZy3pIBwE0S&i=0.4&sp=500&p1=fbIjIZy3pIBwE0S&p2=fbIjIZy3pIBwE0S&asn=24554",
+        "https://sr81.garnicaniibreslin.sbs/v4/hz/ecj16/index-f1-v1-a1.txt"
+      ],
+      "isFavorite": false
+    }
+  ]
+};
 
-function playVideo(title, video) {
+// Initialize favorites from localStorage
+let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+// Enhanced playVideo function
+function playVideo(title, videoUrl) {
   showLoading();
   
-  // Simulate loading delay (in a real app, this would be the actual loading time)
+  // Simulate loading delay
   setTimeout(() => {
-    const url = `player.html?title=${encodeURIComponent(title)}&video=${encodeURIComponent(video)}`;
     hideLoading();
-    window.location.href = url;
-  }, 1000);
+    
+    // In a real app, this would redirect to the player page
+    // window.location.href = `player.html?title=${encodeURIComponent(title)}&video=${encodeURIComponent(videoUrl)}`;
+    
+    // For demo purposes, show a toast
+    showToast(`Now playing: ${title}`);
+    
+    // Track recently watched
+    trackRecentlyWatched(title, videoUrl);
+  }, 1500);
 }
 
-function toggleEpisodes() {
+// Enhanced toggleEpisodes function
+function toggleEpisodes(event) {
+  event.stopPropagation();
   const card = document.getElementById('seriesCard');
   const list = document.getElementById('episodeList');
   
@@ -344,10 +793,11 @@ function toggleEpisodes() {
   }
   
   if (list.innerHTML === '') {
-    seriesEpisodes.forEach((link, i) => {
+    const series = contentData.series[0];
+    series.episodes.forEach((link, i) => {
       const ep = document.createElement('a');
       ep.className = 'episode-link';
-      ep.innerHTML = `<span>Episode ${i + 1}</span> <i class="fas fa-play"></i>`;
+      ep.innerHTML = `<span>Episode ${i + 1}: ${getEpisodeTitle(i)}</span> <i class="fas fa-play"></i>`;
       ep.onclick = (e) => {
         e.stopPropagation();
         playVideo(`The Day of the Jackal - S01E${String(i + 1).padStart(2, '0')}`, link);
@@ -360,35 +810,196 @@ function toggleEpisodes() {
   card.classList.add('active');
 }
 
+function getEpisodeTitle(index) {
+  const titles = [
+    "The Assignment",
+    "The Preparation",
+    "The Identity",
+    "The Journey",
+    "The Hunt Begins",
+    "Close Call",
+    "Changing Tactics",
+    "The Trap",
+    "Showdown",
+    "Aftermath"
+  ];
+  return titles[index] || `Episode ${index + 1}`;
+}
+
+// Show loading animation
 function showLoading() {
-  document.getElementById('loading').style.display = 'flex';
+  const loading = document.getElementById('loading');
+  const dots = loading.querySelector('.loading-dots');
+  
+  loading.style.display = 'flex';
+  
+  // Animate dots
+  let dotCount = 0;
+  const dotInterval = setInterval(() => {
+    dotCount = (dotCount + 1) % 4;
+    dots.textContent = '.'.repeat(dotCount);
+  }, 500);
+  
+  // Store interval ID to clear later
+  loading.dataset.intervalId = dotInterval;
 }
 
+// Hide loading animation
 function hideLoading() {
-  document.getElementById('loading').style.display = 'none';
+  const loading = document.getElementById('loading');
+  clearInterval(loading.dataset.intervalId);
+  loading.style.display = 'none';
 }
 
-// Add smooth scroll behavior for the episode list
-document.querySelectorAll('.episode-link').forEach(link => {
-  link.addEventListener('click', function(e) {
-    e.preventDefault();
-    const target = this.getAttribute('href');
-    document.querySelector(target).scrollIntoView({
-      behavior: 'smooth'
+// Filter content by type
+function filterContent(type) {
+  const tabs = document.querySelectorAll('.nav-tab');
+  tabs.forEach(tab => tab.classList.remove('active'));
+  event.target.classList.add('active');
+  
+  const cards = document.querySelectorAll('.card');
+  cards.forEach(card => card.style.display = 'none');
+  
+  if (type === 'all') {
+    cards.forEach(card => card.style.display = 'block');
+  } else if (type === 'favorites') {
+    // Show only favorites
+    cards.forEach(card => {
+      const title = card.querySelector('.card-title span').textContent;
+      if (favorites.includes(title)) {
+        card.style.display = 'block';
+      }
     });
+  } else {
+    // Show by type (movie/series)
+    const typeCards = document.querySelectorAll(`.card[data-type="${type}"]`);
+    typeCards.forEach(card => card.style.display = 'block');
+  }
+}
+
+// Search titles
+function searchTitles() {
+  const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+  const cards = document.querySelectorAll('.card');
+  
+  cards.forEach(card => {
+    const title = card.querySelector('.card-title span').textContent.toLowerCase();
+    const description = card.querySelector('.card-description').textContent.toLowerCase();
+    
+    if (title.includes(searchTerm) || description.includes(searchTerm)) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+// Add to favorites
+function addToFavorites(title) {
+  event.stopPropagation();
+  
+  const index = favorites.indexOf(title);
+  if (index === -1) {
+    favorites.push(title);
+    showToast(`Added to favorites: ${title}`);
+  } else {
+    favorites.splice(index, 1);
+    showToast(`Removed from favorites: ${title}`);
+  }
+  
+  // Update localStorage
+  localStorage.setItem('favorites', JSON.stringify(favorites));
+  
+  // Update UI if on favorites tab
+  if (document.querySelector('.nav-tab.active').textContent.includes('Favorites')) {
+    filterContent('favorites');
+  }
+}
+
+// Show toast notification
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  const toastMessage = document.getElementById('toastMessage');
+  
+  toastMessage.textContent = message;
+  toast.classList.add('show');
+  
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3000);
+}
+
+// Show details modal (simplified for demo)
+function showDetails(title) {
+  event.stopPropagation();
+  showToast(`Showing details for: ${title}`);
+}
+
+// Track recently watched
+function trackRecentlyWatched(title, url) {
+  let history = JSON.parse(localStorage.getItem('watchHistory')) || [];
+  
+  // Remove if already exists
+  history = history.filter(item => item.title !== title);
+  
+  // Add to beginning
+  history.unshift({ title, url, date: new Date().toISOString() });
+  
+  // Keep only last 10 items
+  if (history.length > 10) {
+    history = history.slice(0, 10);
+  }
+  
+  localStorage.setItem('watchHistory', JSON.stringify(history));
+}
+
+// Scroll to top
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+}
+
+// Initialize content
+document.addEventListener('DOMContentLoaded', () => {
+  // Set active tab
+  document.querySelector('.nav-tab').classList.add('active');
+  
+  // Add event listeners for keyboard navigation
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      const list = document.getElementById('episodeList');
+      if (list.style.display === 'block') {
+        list.style.display = 'none';
+        document.getElementById('seriesCard').classList.remove('active');
+      }
+    }
+  });
+  
+  // Animate dots in loading text
+  const dots = document.querySelector('.loading-dots');
+  if (dots) {
+    let dotCount = 0;
+    setInterval(() => {
+      dotCount = (dotCount + 1) % 4;
+      dots.textContent = '.'.repeat(dotCount);
+    }, 500);
+  }
+  
+  // Show scroll-to-top button when scrolling
+  window.addEventListener('scroll', () => {
+    const fab = document.querySelector('.fab');
+    if (window.scrollY > 300) {
+      fab.style.opacity = '1';
+      fab.style.visibility = 'visible';
+    } else {
+      fab.style.opacity = '0';
+      fab.style.visibility = 'hidden';
+    }
   });
 });
 
-// Add keyboard navigation support
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') {
-    const list = document.getElementById('episodeList');
-    if (list.style.display === 'block') {
-      list.style.display = 'none';
-      document.getElementById('seriesCard').classList.remove('active');
-    }
-  }
-});
 </script>
 
 </body>
